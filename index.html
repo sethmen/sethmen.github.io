@@ -37,6 +37,15 @@ nav{display:flex;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none;-
 nav::-webkit-scrollbar{display:none}
 nav a{padding:9px 14px;border-radius:99px;font-weight:700;font-size:14px;white-space:nowrap;color:var(--mut)}
 nav a.on{background:var(--inv);color:var(--invt)}
+.hdr-actions{display:flex;align-items:center;gap:10px;flex:none}
+.burger{display:none;width:44px;height:44px;border-radius:50%;border:2px solid var(--line);background:var(--card);cursor:pointer;position:relative;flex:none;padding:0}
+.burger span{position:absolute;left:50%;top:50%;width:18px;height:2.5px;border-radius:2px;background:var(--fg);transform:translate(-50%,-50%);transition:transform .26s cubic-bezier(.4,0,.2,1),opacity .16s ease}
+.burger span:nth-child(1){transform:translate(-50%,calc(-50% - 6px))}
+.burger span:nth-child(3){transform:translate(-50%,calc(-50% + 6px))}
+.burger.open span:nth-child(1){transform:translate(-50%,-50%) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translate(-50%,-50%) rotate(-45deg)}
+.menu-note{display:none}
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 24px;border-radius:99px;font-weight:700;border:2px solid var(--ink);box-shadow:0 4px 0 var(--ink);background:var(--sun);color:#1F1B24;transition:transform .12s ease,box-shadow .12s ease}
 .btn:hover{transform:translateY(2px);box-shadow:0 2px 0 var(--ink)}
 .btn:active{transform:translateY(4px);box-shadow:0 0 0 var(--ink)}
@@ -89,17 +98,61 @@ footer{border-top:1.5px solid color-mix(in srgb,var(--line) 14%,transparent);pad
 .cmp th{background:none;font-size:12px;letter-spacing:.1em;color:var(--mut)}
 .cmp td:first-child{border-radius:14px 0 0 14px;font-weight:700}
 .cmp td:last-child{border-radius:0 14px 14px 0}
+
 @media(max-width:1020px){nav a{padding:9px 10px}.slg{font-size:12px;padding:5px 11px}}
+
+/* ---------- MOBILE / TABLET: burger panel ---------- */
 @media(max-width:820px){
+header{background:var(--bg);backdrop-filter:none}
+.bar{height:64px;flex-wrap:nowrap;gap:12px;padding:10px 0;position:relative}
+.brand{min-width:0;flex:1;position:relative;z-index:61}
+.brand svg{width:158px;height:auto}
+.slg{display:none}
+.hdr-actions{margin-left:auto;position:relative;z-index:61;gap:8px}
+.burger{display:block}
+.th{width:44px;height:44px}
+
+nav{
+  position:fixed;inset:0;z-index:60;margin:0;width:auto;
+  display:flex;flex-direction:column;justify-content:center;
+  gap:0;padding:calc(84px + env(safe-area-inset-top,0px)) 24px calc(30px + env(safe-area-inset-bottom,0px));
+  background:var(--bg);overflow-y:auto;overscroll-behavior:contain;
+  opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-8px);
+  transition:opacity .24s ease,transform .24s ease,visibility .24s;
+}
+nav.open{opacity:1;visibility:visible;pointer-events:auto;transform:none}
+nav a{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  font:800 clamp(26px,8vw,36px)/1.15 'Bricolage Grotesque',system-ui,sans-serif;
+  letter-spacing:-.03em;padding:16px 0;border-radius:0;color:var(--fg);
+  border-bottom:1.5px solid color-mix(in srgb,var(--line) 14%,transparent);
+  opacity:0;transform:translateY(12px);
+  transition:opacity .28s ease,transform .28s ease,color .18s ease;
+}
+nav a::after{content:"→";font-size:.62em;color:var(--mut);transition:transform .2s ease,color .2s ease}
+nav.open a{opacity:1;transform:none}
+nav.open a:nth-child(1){transition-delay:.06s}
+nav.open a:nth-child(2){transition-delay:.11s}
+nav.open a:nth-child(3){transition-delay:.16s}
+nav.open a:nth-child(4){transition-delay:.21s}
+nav.open a:nth-child(5){transition-delay:.26s}
+nav a.on{background:none;color:var(--tom)}
+nav a.on::after{color:var(--tom);transform:translateX(3px)}
+nav a:active{color:var(--tom)}
+.menu-note{
+  display:block;margin-top:30px;font-weight:700;font-size:11.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--mut);opacity:0;transition:opacity .3s ease 0s;
+}
+nav.open .menu-note{opacity:1;transition-delay:.34s}
+body.menu-open{overflow:hidden}
+
 .hero,.g2{grid-template-columns:1fr}
 .g3,.g4{grid-template-columns:1fr 1fr}
-.bar{flex-wrap:wrap;height:auto;padding:12px 0;gap:12px}
-nav{margin:0;width:100%;order:3}
-.th{margin-left:auto}
 section{padding:46px 0}
 .hero{padding:40px 0 30px;gap:26px}
 h1{font-size:clamp(34px,8vw,56px)}
 }
+
 @media(max-width:640px){
 .cmp{display:block;border-spacing:0}
 .cmp tbody{display:block}
@@ -111,19 +164,28 @@ h1{font-size:clamp(34px,8vw,56px)}
 .cmp td[data-l]::before{content:attr(data-l);display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--mut);margin-bottom:2px}
 .cmp td[data-l]+td[data-l]{border-top:1px dashed color-mix(in srgb,var(--line) 20%,transparent)}
 }
+
 @media(max-width:520px){
 .g3,.g4{grid-template-columns:1fr}
-.slg{display:none}
-.brand svg{width:148px;height:auto}
+.brand svg{width:142px}
 .w{padding:0 16px}
 .card{padding:20px;border-radius:20px}
 .tk b{font-size:32px}
 .art{border-radius:24px;padding:10px}
-.seg a{padding:9px 16px;font-size:14px}
 .lead{font-size:16px}
 h3{font-size:20px}
-.pill{letter-spacing:.08em;font-size:10px}
+.pill{letter-spacing:.07em;font-size:10px;padding:6px 12px}
+.cta{width:100%}
+.cta .btn{flex:1 1 140px}
+.seg{display:flex;width:100%;gap:4px;padding:5px}
+.seg a{flex:1 1 0;text-align:center;padding:10px 6px;font-size:13.5px}
+.seg a small{display:block;margin:2px 0 0;font-size:11px}
+.mode .g4 .card{display:grid;grid-template-columns:auto 1fr;column-gap:12px;padding:18px}
+.mode .g4 .num{grid-row:1/span 2;margin:0;align-self:start}
+.mode .g4 h3{margin:0 0 2px}
+.who span{font-size:12px;padding:5px 11px}
 }
+
 @media(prefers-reduced-motion:reduce){
 *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
 }
@@ -132,8 +194,11 @@ h3{font-size:20px}
 <body>
 <header><div class="w bar">
 <div class="brand"><a href="#" aria-label="Mmm Yemek"><svg width="176" height="44" viewBox="0 0 440 110" fill="none" role="img" aria-label="Mmm.. Yemek"><text x="4" y="88" font-family="'Bricolage Grotesque','Arial Rounded MT Bold',system-ui,sans-serif" font-size="78" font-weight="800" textLength="200" lengthAdjust="spacingAndGlyphs"><tspan fill="var(--lg)" rotate="-7">M</tspan><tspan fill="#FF5A3C" rotate="5" dy="-8">m</tspan><tspan fill="var(--lg)" rotate="-4" dy="12">m</tspan><tspan fill="#FF5A3C" dy="-4">..</tspan></text><text x="214" y="88" font-family="'Bricolage Grotesque','Arial Rounded MT Bold',system-ui,sans-serif" font-size="72" font-weight="800" fill="var(--lg)" textLength="206" lengthAdjust="spacingAndGlyphs">Yemek</text><path d="M22 104q100 14 196 0t200 -2" stroke="#FF5A3C" stroke-width="6" stroke-linecap="round"/><path d="M428 18l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" fill="#FFD84D" stroke="#1F1B24" stroke-width="2"/></svg></a><span class="slg">Bütçene göre en iyisi demek!</span></div>
-<nav id="nav"><a href="#" data-p="home">Ana Sayfa</a><a href="#nasil-acil" data-p="nasil">Nasıl Çalışır</a><a href="#musteri" data-p="musteri">Müşteriler</a><a href="#restoran" data-p="restoran">Restoranlar</a><a href="#topluluk" data-p="topluluk">Topluluk</a></nav>
+<nav id="nav" aria-label="Ana menü"><a href="#" data-p="home">Ana Sayfa</a><a href="#nasil-acil" data-p="nasil">Nasıl Çalışır</a><a href="#musteri" data-p="musteri">Müşteriler</a><a href="#restoran" data-p="restoran">Restoranlar</a><a href="#topluluk" data-p="topluluk">Topluluk</a><p class="menu-note">Bütçene göre en iyisi demek!</p></nav>
+<div class="hdr-actions">
 <button class="th" id="th" type="button" aria-label="Açık veya koyu tema">☾</button>
+<button class="burger" id="burger" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
+</div>
 </div></header>
 
 <main>
@@ -227,20 +292,57 @@ h3{font-size:20px}
 
 <footer><div class="w fr"><span>© 2026 Mmm Yemek · mmmyemek.com</span><span>Yakında: Mmm Food ve Mmm Shopping</span></div></footer>
 
+<noscript><style>
+@media(max-width:820px){
+.burger{display:none}
+nav{position:static;opacity:1;visibility:visible;pointer-events:auto;transform:none;flex-direction:row;padding:0;overflow-x:auto;background:none;width:100%;order:3;margin-top:8px}
+nav a{font:700 14px/1 'DM Sans',system-ui,sans-serif;padding:9px 12px;border-bottom:0;border-radius:99px;opacity:1;transform:none}
+nav a::after{content:none}
+nav a.on{color:var(--invt);background:var(--inv)}
+.menu-note{display:none}
+.bar{flex-wrap:wrap;height:auto}
+}
+</style></noscript>
+
 <script>
 (function(){
 var T={home:"Mmm Yemek · Bütçene göre en iyisi",nasil:"Nasıl Çalışır · Mmm Yemek",musteri:"Müşteriler · Mmm Yemek",restoran:"Restoranlar · Mmm Yemek",topluluk:"Topluluk · Mmm Yemek"},M=["acil","hemen","onodemeli"];
-function go(){
-var h=(location.hash||"").replace("#",""),m="acil",pg=h.split("-")[0];
-if(pg==="nasil"){m=h.split("-")[1];if(M.indexOf(m)<0)m="acil"}
-if(!T[pg])pg="home";
-document.querySelectorAll(".page").forEach(function(p){p.classList.toggle("on",p.id==="p-"+pg)});
-document.querySelectorAll("#nav a").forEach(function(a){a.classList.toggle("on",a.getAttribute("data-p")===pg)});
-document.querySelectorAll(".mode").forEach(function(e){e.classList.toggle("on",e.id==="m-"+m)});
-document.querySelectorAll("#seg a").forEach(function(a){a.classList.toggle("on",a.getAttribute("data-m")===m)});
-document.title=T[pg];window.scrollTo(0,0);
+var burger=document.getElementById("burger"),nav=document.getElementById("nav");
+
+function setMenu(open){
+  if(!burger||!nav)return;
+  nav.classList.toggle("open",open);
+  burger.classList.toggle("open",open);
+  burger.setAttribute("aria-expanded",open?"true":"false");
+  burger.setAttribute("aria-label",open?"Menüyü kapat":"Menüyü aç");
+  document.body.classList.toggle("menu-open",open);
 }
+
+function go(){
+  var h=(location.hash||"").replace("#",""),m="acil",pg=h.split("-")[0];
+  if(pg==="nasil"){m=h.split("-")[1];if(M.indexOf(m)<0)m="acil"}
+  if(!T[pg])pg="home";
+  document.querySelectorAll(".page").forEach(function(p){p.classList.toggle("on",p.id==="p-"+pg)});
+  document.querySelectorAll("#nav a").forEach(function(a){a.classList.toggle("on",a.getAttribute("data-p")===pg)});
+  document.querySelectorAll(".mode").forEach(function(e){e.classList.toggle("on",e.id==="m-"+m)});
+  document.querySelectorAll("#seg a").forEach(function(a){a.classList.toggle("on",a.getAttribute("data-m")===m)});
+  document.title=T[pg];window.scrollTo(0,0);
+  setMenu(false);
+}
+
 window.addEventListener("hashchange",go);go();
+
+if(burger&&nav){
+  burger.addEventListener("click",function(){setMenu(!nav.classList.contains("open"))});
+  nav.addEventListener("click",function(e){if(e.target.closest("a"))setMenu(false)});
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape"&&nav.classList.contains("open")){setMenu(false);burger.focus();}
+  });
+  var mq=window.matchMedia("(min-width:821px)");
+  var onMq=function(e){if(e.matches)setMenu(false)};
+  if(mq.addEventListener)mq.addEventListener("change",onMq);else if(mq.addListener)mq.addListener(onMq);
+}
+
 var r=document.documentElement,tb=document.getElementById("th");
 function cur(){return r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}
 try{var st=localStorage.getItem("mmm-theme");if(st)r.setAttribute("data-theme",st)}catch(e){}
