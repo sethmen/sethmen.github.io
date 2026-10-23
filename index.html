@@ -160,12 +160,61 @@ footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted);font-s
 @media(max-width:640px){.wrap{width:calc(100% - 32px)}.nav-r .btn{display:none}.phone{height:auto;min-height:640px}.photo{aspect-ratio:4/4.4;border-radius:24px}.mini{min-width:170px}.ben{grid-template-columns:1fr}.tl{grid-template-columns:1fr}.il{aspect-ratio:16/9}.il svg{width:auto;height:80%}.vs-h{display:none}.vs-r{grid-template-columns:1fr}.vs-r>*{padding:18px 20px}.vs-r h3{padding-bottom:0}.vs-r p:first-of-type:before{content:"Bugün: ";font-weight:700;color:var(--ink)}.vs-r p:last-child:before{content:"Mmm’de: ";font-weight:700}.tier{grid-template-columns:44px 1fr}.tier p{grid-column:2}.tbl{display:block;overflow-x:auto}.tbl th,.tbl td{padding:16px;min-width:150px}.tk{grid-template-columns:1fr 112px;--sx:calc(100% - 112px)}.tk>div{padding:18px}.tk .price{font-size:24px}.tabs{display:flex}.tab{flex:1;padding:12px 6px;font-size:14px}.pilot,.titles{padding:24px}}
 
 /* =====================================================================
+   VISUAL ENHANCEMENTS: animated food watermarks, glow, details
+   (decoration only: page structure and content layout are unchanged)
+   ===================================================================== */
+main,footer{position:relative;z-index:1}
+.bg-art{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.bg-art:before{content:"";position:absolute;inset:0;background:radial-gradient(circle,color-mix(in srgb,var(--ink) 16%,transparent) 1px,transparent 1.5px) 0 0/26px 26px;-webkit-mask:linear-gradient(180deg,#000,transparent 75%);mask:linear-gradient(180deg,#000,transparent 75%);opacity:.35}
+.blob{position:absolute;border-radius:50%;width:56vmax;height:56vmax;animation:bl 26s ease-in-out infinite alternate}
+.b1{left:-18vmax;top:-20vmax;background:radial-gradient(closest-side,color-mix(in srgb,var(--accent) 14%,transparent),transparent)}
+.b2{right:-22vmax;top:14vh;background:radial-gradient(closest-side,color-mix(in srgb,var(--blue) 10%,transparent),transparent);animation-delay:-9s}
+.b3{left:14vw;bottom:-30vmax;background:radial-gradient(closest-side,color-mix(in srgb,var(--gold) 24%,transparent),transparent);animation-delay:-16s}
+@keyframes bl{to{transform:translate(4vmax,-3vmax) scale(1.1)}}
+.fi{position:absolute;left:var(--x);top:var(--y);width:calc(var(--s)*var(--k,1));height:calc(var(--s)*var(--k,1));color:var(--ink);opacity:.085;rotate:var(--r)}
+[data-theme=dark] .fi{opacity:.09}
+.fi svg{display:block;width:100%;height:100%;overflow:visible;will-change:transform;animation:fl var(--t,16s) ease-in-out var(--d,0s) infinite alternate}
+.fi.sp svg{animation:spin 70s linear infinite}
+@keyframes fl{from{transform:translate(0,0) rotate(-5deg)}50%{transform:translate(14px,-24px) rotate(5deg)}to{transform:translate(-12px,10px) rotate(-3deg)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.steam path{transform-box:fill-box;animation:steam 3.4s ease-in-out infinite}
+.steam path:nth-child(2){animation-delay:-1.1s}.steam path:nth-child(3){animation-delay:-2.2s}
+@keyframes steam{0%{opacity:0;transform:translateY(8px)}45%{opacity:1}100%{opacity:0;transform:translateY(-10px)}}
+.spk{position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);opacity:0;animation:tw 4.2s ease-in-out var(--d,0s) infinite}
+.spk{color:var(--ink)!important}.spk svg{width:100%;height:100%;display:block}
+@keyframes tw{0%,100%{opacity:0;transform:scale(.3) rotate(0)}50%{opacity:.35;transform:scale(1) rotate(45deg)}}
+@supports (animation-timeline:scroll()){.fi{animation:px linear both;animation-timeline:scroll(root block)}@keyframes px{to{transform:translateY(var(--py,-100px))}}}
+/* sections no longer a flat white block */
+.sec.alt{background:color-mix(in srgb,var(--surface) 78%,transparent)}
+/* logo dots hop */
+.logo i{display:inline-block;animation:hop 2.6s ease-in-out infinite}
+@keyframes hop{0%,70%,100%{transform:translateY(0)}82%{transform:translateY(-4px)}92%{transform:translateY(0)}}
+/* hero: wavy underline + rotating sticker */
+.hero h1 span{position:relative}
+.hero h1 span:after{content:"";position:absolute;left:0;bottom:-18px;width:min(260px,62%);height:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='12' viewBox='0 0 24 12'%3E%3Cpath d='M0 6q6-8 12 0t12 0' fill='none' stroke='%23e0553a' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x 0 0/24px 12px;animation:wv 1.4s linear infinite}
+@keyframes wv{to{background-position-x:24px}}
+.badge{position:absolute;z-index:4;right:-14px;top:-24px;width:112px;height:112px;filter:drop-shadow(0 10px 18px rgba(15,18,53,.22))}
+.badge .ring{width:100%;height:100%;display:block;animation:spin 22s linear infinite}
+.badge .ctr{position:absolute;left:31%;top:31%;width:38%;height:38%;color:#2a2208}
+/* cards: soft lift on hover devices */
+@media(hover:hover){.st,.num,.vote,.pilot{transition:transform .3s,box-shadow .3s}.st:hover,.num:hover,.vote:hover,.pilot:hover{transform:translateY(-4px);box-shadow:0 22px 40px -22px rgba(23,33,31,.4)}}
+/* gentle reveal on scroll (progressive enhancement) */
+@supports (animation-timeline:view()){
+.st,.num,.ben>div,.tier,.vs-r,.vote,.titles,.pilot,.rank,.rphoto,.cphoto{animation:rv linear backwards;animation-timeline:view();animation-range:entry 0% entry 45%}
+}
+@keyframes rv{from{opacity:0;translate:0 26px}}
+@media(max-width:960px){.fi{--k:.78}.badge{width:92px;height:92px;right:-6px;top:-18px}}
+@media(max-width:640px){.fi{--k:.58;opacity:.09}.fi.hm{display:none}.badge{width:78px;height:78px;right:-4px;top:-14px}.hero h1 span:after{bottom:-14px;height:10px;background-size:20px 10px}.blob{width:80vmax;height:80vmax}}
+@media(prefers-reduced-motion:reduce){.fi,.fi svg,.blob,.badge .ring,.logo i,.spk,.steam path,.hero h1 span:after{animation:none!important}.spk{opacity:.5}}
+
+.burger,.scrim{display:none}
+/* =====================================================================
    MOBILE ADAPTIVE LAYER
    Everything below lives inside max-width media queries only, so the
    desktop / web layout (961px and up) is completely untouched.
    ===================================================================== */
 @media(max-width:960px){
-:root{--nav:112px;--gut:max(20px,env(safe-area-inset-left),env(safe-area-inset-right))}
+:root{--nav:calc(64px + env(safe-area-inset-top));--gut:max(20px,env(safe-area-inset-left),env(safe-area-inset-right))}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{overflow-x:clip}
 a,button,label,.tk{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
@@ -173,12 +222,23 @@ a,button,label,.tk{-webkit-tap-highlight-color:transparent;touch-action:manipula
 .sec{padding:clamp(44px,8vw,64px) 0}
 #siniflar{padding-top:28px}
 .kicker{align-items:flex-start;line-height:1.4}.kicker:before{flex:none;margin-top:.7em}
-/* header: compact two-row bar, swipeable menu, notch safe */
-header{padding-top:calc(8px + env(safe-area-inset-top))}
-.nav{row-gap:4px}
-.links{width:calc(100% + 2*var(--gut));max-width:none;margin-inline:calc(-1*var(--gut));padding:0 var(--gut) 8px;gap:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
-.links::-webkit-scrollbar{display:none}
-.links a{flex:none;padding:11px 14px;font-size:15px}
+/* header: slim bar + burger menu panel, notch safe */
+header{height:calc(64px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 0 0}
+.nav{flex-wrap:nowrap;row-gap:0}
+.nav-r{gap:8px}
+.burger{display:block;position:relative;width:44px;height:44px;flex:none;border-radius:13px;border:1.5px solid var(--line);background:var(--surface)}
+.burger i{position:absolute;left:12px;right:12px;height:2px;border-radius:2px;background:var(--ink);transition:transform .28s,opacity .2s,top .28s}
+.burger i:nth-child(1){top:14px}.burger i:nth-child(2){top:20px}.burger i:nth-child(3){top:26px}
+.burger[aria-expanded=true] i:nth-child(1){top:20px;transform:rotate(45deg)}
+.burger[aria-expanded=true] i:nth-child(2){opacity:0}
+.burger[aria-expanded=true] i:nth-child(3){top:20px;transform:rotate(-45deg)}
+.links{position:absolute;left:0;right:0;top:100%;order:0;width:auto;max-width:none;margin:0;padding:8px var(--gut) 16px;flex-direction:column;gap:2px;overflow-x:hidden;overflow-y:auto;max-height:calc(100vh - 80px);max-height:calc(100dvh - 64px - env(safe-area-inset-top));background:var(--bg);border-bottom:1px solid var(--line);box-shadow:0 24px 40px -24px rgba(15,18,53,.35);visibility:hidden;opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .22s,transform .22s,visibility 0s .22s}
+.links.open{visibility:visible;opacity:1;transform:none;pointer-events:auto;transition-delay:0s}
+.links a{padding:15px 16px;font-size:17px;border-radius:14px;color:var(--ink)}
+.links a.on{background:var(--soft)}
+.scrim{display:block;position:fixed;inset:0;z-index:25;background:rgba(10,14,12,.4);opacity:0;visibility:hidden;transition:opacity .22s,visibility 0s .22s}
+.scrim.on{opacity:1;visibility:visible;transition-delay:0s}
+body.menu-open{overflow:hidden}
 /* touch: no sticky hover shifts, bigger hit areas */
 .tk:hover{transform:none}
 .dots button{position:relative}.dots button:before{content:"";position:absolute;inset:-14px -3px}
@@ -192,7 +252,6 @@ header{padding-top:calc(8px + env(safe-area-inset-top))}
 footer{padding:32px 0 calc(32px + env(safe-area-inset-bottom))}
 footer .foot{flex-direction:column;align-items:flex-start;gap:10px}
 }
-@media(max-width:960px) and (max-height:500px){header{position:static}}
 
 @media(max-width:640px){
 :root{--gut:max(16px,env(safe-area-inset-left),env(safe-area-inset-right))}
@@ -293,7 +352,6 @@ footer{font-size:13.5px}
 @media(max-width:360px){
 :root{--gut:max(14px,env(safe-area-inset-left),env(safe-area-inset-right))}
 .logo{font-size:20px}
-.links a{padding:11px 12px;font-size:14px}
 .facts{grid-template-columns:1fr}
 .facts div,.facts div+div,.facts div:nth-child(3){padding:16px 0;border-left:0}
 .facts div+div{border-top:1px solid var(--line)}
@@ -329,11 +387,26 @@ footer{font-size:13.5px}
 <symbol id="w-fish" viewBox="0 0 100 100"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 50c16-26 48-26 64 0-16 26-48 26-64 0z"/><path d="M72 50l20-16v32z"/><circle cx="26" cy="46" r="3"/><path d="M44 36c4 8 4 20 0 28"/></g></symbol>
 <symbol id="w-mushroom" viewBox="0 0 100 100"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 56c0-30 76-30 76 0z"/><path d="M40 56v24c0 10 20 10 20 0V56"/><circle cx="34" cy="44" r="4"/><circle cx="56" cy="38" r="3"/><circle cx="68" cy="48" r="4"/></g></symbol>
 </defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="a-noodle" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 62h96c0 26-20 42-48 42S12 88 12 62z"/><path d="M24 78c6 6 12-6 18 0s12-6 18 0 12-6 18 0 12-6 18 0"/><path d="M44 110h32"/><path d="M26 62c0-8 8-8 8-16s-8-8-8-14M42 62c0-8 8-8 8-16s-8-8-8-16M58 62c0-8 8-8 8-16s-8-8-8-16"/><path d="M72 8l32 44M84 6l30 38"/><g class="steam"><path d="M30 24c-3-3 3-6 0-10"/><path d="M48 22c-3-3 3-6 0-10"/></g></g></symbol>
+<symbol id="a-pizza" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 24c28-16 64-16 92 0L60 110z"/><path d="M20 36c26-12 54-12 80 0"/><circle cx="48" cy="52" r="7"/><circle cx="72" cy="54" r="6"/><circle cx="60" cy="76" r="6"/><path d="M46 52h.1M70 54h.1M60 76h.1" stroke-width="3"/><path d="M38 42h.1M84 44h.1M54 62h.1M68 90h.1" stroke-width="3.6"/></g></symbol>
+<symbol id="a-makarna" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="60" cy="86" rx="52" ry="20"/><ellipse cx="60" cy="86" rx="38" ry="12"/><path d="M28 84c0-30 64-30 64 0"/><path d="M34 82c4-16 48-16 52 0M42 76c4-10 32-10 36 0M50 70c3-6 17-6 20 0"/><circle cx="60" cy="52" r="10"/><path d="M60 40c2-8 8-10 12-8-1 6-6 10-12 8z"/><path d="M98 12L80 56M92 62l-4 10M96 60l-3 11M100 58l-2 11" /></g></symbol>
+<symbol id="a-kebab" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(-45 60 60)"><path d="M4 60h16M95 60h12"/><circle cx="111" cy="60" r="4"/><rect x="20" y="44" width="18" height="32" rx="6"/><path d="M26 52v16M32 50v20"/><circle cx="48" cy="60" r="10"/><rect x="58" y="44" width="18" height="32" rx="6"/><path d="M64 52v16M70 50v20"/><ellipse cx="86" cy="60" rx="9" ry="14"/><path d="M82 52c3 5 3 11 0 16"/></g></g></symbol>
+<symbol id="a-dumpling" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 82c0-30 22-50 48-50s48 20 48 50c0 8-6 14-14 14H26c-8 0-14-6-14-14z"/><path d="M40 40c-2 8 0 14 4 20M54 36c-1 9 1 16 4 24M68 36c1 9-1 16-5 24M82 42c2 7 0 13-4 18"/><path d="M34 106h52" /><g class="steam"><path d="M46 24c-3-3 3-6 0-10"/><path d="M62 22c-3-3 3-6 0-10"/><path d="M78 24c-3-3 3-6 0-10"/></g></g></symbol>
+<symbol id="a-takeout" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M30 48h60l-9 56H39z"/><path d="M24 48l36-12 36 12"/><path d="M44 48c0-28 32-28 32 0"/><path d="M46 66h28M44 80h32"/><path d="M60 58l-3 4 3 4 3-4z"/><path d="M82 34l24-22M90 38l24-16"/></g></symbol>
+<symbol id="a-sushi" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 80c0-12 14-16 46-16s46 4 46 16-14 18-46 18-46-6-46-18z"/><path d="M16 70c10-24 78-24 88 0-22 10-66 10-88 0z"/><path d="M42 58l-5 14M60 56l-3 16M78 58l-3 14"/><path d="M52 66v32M68 66v32" stroke-dasharray="1 7"/></g></symbol>
+<symbol id="a-burger" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 52c0-28 88-28 88 0z"/><path d="M44 36h.1M60 30h.1M76 36h.1M52 44h.1M70 44h.1" stroke-width="3.6"/><path d="M12 62c8 6 12-6 20 0s12-6 20 0 12-6 20 0 12-6 20 0 10-4 16 0"/><rect x="14" y="70" width="92" height="14" rx="7"/><path d="M18 92h84c0 10-8 14-18 14H36c-10 0-18-4-18-14z"/></g></symbol>
+<symbol id="a-taco" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 90a52 52 0 0 1 104 0z"/><path d="M20 76c4-12 12-12 16 0M42 70c4-14 14-14 18 0M66 72c4-12 12-12 16 0M88 78c3-9 9-9 12 0"/><path d="M22 90a38 38 0 0 1 76 0" stroke-dasharray="2 7"/><path d="M96 28a14 14 0 0 1 14 14H82a14 14 0 0 1 14-14z"/><path d="M96 28v14"/></g></symbol>
+<symbol id="a-cutlery" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(35 60 60)"><ellipse cx="60" cy="30" rx="12" ry="17" style="fill:var(--surface)"/><path d="M60 47v62"/></g><g transform="rotate(-35 60 60)"><path d="M48 12v22a12 12 0 0 0 24 0V12M60 12v30M60 46v63"/></g></g></symbol>
+<symbol id="a-spark" viewBox="0 0 120 120"><path d="M60 6c4 30 24 50 54 54-30 4-50 24-54 54-4-30-24-50-54-54 30-4 50-24 54-54z" style="fill:currentColor"/></symbol>
+</defs></svg>
+<div class="bg-art" aria-hidden="true"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i><span class="fi " style="--x:3%;--y:9%;--s:140px;--r:-10deg;--py:-140px;--d:0.0s;--t:15s"><svg><use href="#a-noodle"/></svg></span><span class="fi " style="--x:28%;--y:3%;--s:120px;--r:12deg;--py:-90px;--d:-1.7s;--t:18s"><svg><use href="#a-pizza"/></svg></span><span class="fi " style="--x:64%;--y:2%;--s:130px;--r:-8deg;--py:-170px;--d:-3.4s;--t:21s"><svg><use href="#a-makarna"/></svg></span><span class="fi " style="--x:85%;--y:6%;--s:130px;--r:0deg;--py:-110px;--d:-5.1s;--t:24s"><svg><use href="#a-kebab"/></svg></span><span class="fi " style="--x:90%;--y:38%;--s:110px;--r:10deg;--py:-200px;--d:-6.8s;--t:15s"><svg><use href="#a-dumpling"/></svg></span><span class="fi " style="--x:-3%;--y:44%;--s:140px;--r:-8deg;--py:-120px;--d:-8.5s;--t:18s"><svg><use href="#a-takeout"/></svg></span><span class="fi hm" style="--x:52%;--y:50%;--s:100px;--r:-6deg;--py:-60px;--d:-10.2s;--t:21s"><svg><use href="#a-sushi"/></svg></span><span class="fi " style="--x:7%;--y:76%;--s:130px;--r:8deg;--py:-160px;--d:-11.9s;--t:24s"><svg><use href="#a-burger"/></svg></span><span class="fi hm" style="--x:24%;--y:88%;--s:110px;--r:-6deg;--py:-100px;--d:-13.6s;--t:15s"><svg><use href="#a-taco"/></svg></span><span class="fi " style="--x:46%;--y:84%;--s:130px;--r:6deg;--py:-220px;--d:-15.3s;--t:18s"><svg><use href="#a-noodle"/></svg></span><span class="fi " style="--x:80%;--y:68%;--s:140px;--r:-14deg;--py:-130px;--d:-17.0s;--t:21s"><svg><use href="#a-pizza"/></svg></span><span class="fi hm" style="--x:92%;--y:88%;--s:110px;--r:-30deg;--py:-80px;--d:-18.7s;--t:24s"><svg><use href="#a-kebab"/></svg></span><span class="spk" style="--x:14%;--y:24%;--s:22px;--d:0s;color:var(--accent)"><svg><use href="#a-spark"/></svg></span><span class="spk" style="--x:74%;--y:22%;--s:18px;--d:1.3s;color:var(--blue)"><svg><use href="#a-spark"/></svg></span><span class="spk" style="--x:40%;--y:34%;--s:16px;--d:2.1s;color:var(--accent)"><svg><use href="#a-spark"/></svg></span><span class="spk" style="--x:96%;--y:60%;--s:24px;--d:0.7s;color:var(--accent)"><svg><use href="#a-spark"/></svg></span><span class="spk" style="--x:34%;--y:66%;--s:20px;--d:2.8s;color:var(--blue)"><svg><use href="#a-spark"/></svg></span><span class="spk" style="--x:70%;--y:90%;--s:18px;--d:1.9s;color:var(--accent)"><svg><use href="#a-spark"/></svg></span><span class="spk" style="--x:12%;--y:60%;--s:16px;--d:3.3s;color:var(--blue)"><svg><use href="#a-spark"/></svg></span></div>
 <header><div class="wrap nav">
 <a class="logo" href="#home" aria-label="Mmm Yemek ana sayfa">Mmm<i>..</i>yemek</a>
-<nav class="links" aria-label="Ana menü"><a href="#home">Ana sayfa</a><a href="#siniflar">Yemek biletleri</a><a href="#nasil">Nasıl çalışır</a><a href="#restoranlar">Restoranlar</a><a href="#topluluk">Topluluk</a><a href="#uyelik">Üyelik</a></nav>
-<div class="nav-r"><button class="theme" id="theme" aria-label="Koyu temaya geç">☼</button><a class="btn pri" href="#siniflar">Yemek biletleri</a></div>
+<nav class="links" id="menu" aria-label="Ana menü"><a href="#home">Ana sayfa</a><a href="#siniflar">Yemek biletleri</a><a href="#nasil">Nasıl çalışır</a><a href="#restoranlar">Restoranlar</a><a href="#topluluk">Topluluk</a><a href="#uyelik">Üyelik</a></nav>
+<div class="nav-r"><button class="theme" id="theme" aria-label="Koyu temaya geç">☼</button><a class="btn pri" href="#siniflar">Yemek biletleri</a><button class="burger" id="burger" aria-label="Menüyü aç" aria-expanded="false" aria-controls="menu"><i></i><i></i><i></i></button></div>
 </div></header>
+<div class="scrim" id="scrim" aria-hidden="true"></div>
 
 <main id="top">
 <section class="hero" data-pg="home"><div class="wrap">
@@ -343,7 +416,7 @@ footer{font-size:13.5px}
 <p class="lead">Restoran aynı anda tek ürüne odaklanır. Sen bütçene uygun sınıftan üç net seçenek arasında seçersin. Restoran yarının talebini bilir, malzemesini tam ihtiyacı kadar alır.</p>
 <div class="acts"><a class="btn pri" href="#siniflar">Yemek biletlerini keşfet</a><a class="btn ghost" href="#nasil">Nasıl çalışır?</a></div>
 <p class="proof"><span><b>Kadıköy pilotu:</b> 50 restoran, 5.000 kullanıcı hedefi</span></p></div>
-<div style="position:relative"><div class="stack" aria-hidden="true"><div class="mini">Economy <b>350 ₺</b></div><div class="mini">Premium <b>550 ₺</b></div><div class="mini">First Class <b>950 ₺</b></div></div>
+<div style="position:relative"><div class="badge" aria-hidden="true"><svg class="ring" viewBox="0 0 120 120"><defs><path id="cp" d="M60 60m-45 0a45 45 0 1 1 90 0a45 45 0 1 1-90 0"/></defs><circle cx="60" cy="60" r="58" style="fill:var(--gold)"/><circle cx="60" cy="60" r="31" style="fill:none;stroke:#2a2208;stroke-opacity:.25;stroke-dasharray:2 5;stroke-linecap:round;stroke-width:2"/><text font-family="Manrope,sans-serif" font-weight="800" font-size="11" fill="#2a2208"><textPath href="#cp" textLength="278" lengthAdjust="spacing">SABİT FİYAT · 3 NET SEÇİM · MMM · </textPath></text></svg><svg class="ctr"><use href="#a-cutlery"/></svg></div><div class="stack" aria-hidden="true"><div class="mini">Economy <b>350 ₺</b></div><div class="mini">Premium <b>550 ₺</b></div><div class="mini">First Class <b>950 ₺</b></div></div>
 <div class="photo" role="img" aria-label="Arkadaşlar yemek masasında"><div class="s on" style="background-image:var(--i0)"></div><div class="s" style="background-image:var(--i1)"></div><div class="s" style="background-image:var(--i2)"></div>
 <div class="cap"><div><small id="ct">Mmm.. Yemek</small><strong id="cs">Bütçene göre en iyisi.</strong></div><div class="dots"><button class="on" aria-label="Görsel 1"></button><button aria-label="Görsel 2"></button><button aria-label="Görsel 3"></button></div></div></div></div>
 </div>
@@ -446,9 +519,16 @@ const vc={up:0,down:0,dia:0};let vs=null;
 $$('.vb').forEach(b=>b.onclick=()=>{const k=b.dataset.v;if(vs===k){vc[k]--;vs=null}else{if(vs)vc[vs]--;vc[k]++;vs=k}$$('.vb').forEach(x=>{x.classList.toggle('on',x.dataset.v===vs);$('span',x).textContent=vc[x.dataset.v]});$('#dtot').textContent=vc.dia+' ◆'});
 // pilot
 $('#pilot').onclick=e=>{e.target.textContent='Not aldık ✓'};
+// mobil menü
+const bg=$('#burger'),mn=$('#menu'),sc=$('#scrim');
+function menu(o){mn.classList.toggle('open',o);sc.classList.toggle('on',o);document.body.classList.toggle('menu-open',o);bg.setAttribute('aria-expanded',o);bg.setAttribute('aria-label',o?'Menüyü kapat':'Menüyü aç')}
+bg.onclick=()=>menu(!mn.classList.contains('open'));sc.onclick=()=>menu(false);
+mn.addEventListener('click',e=>{if(e.target.closest('a'))menu(false)});
+addEventListener('keydown',e=>{if(e.key==='Escape')menu(false)});
+matchMedia('(min-width:961px)').addEventListener('change',e=>{if(e.matches)menu(false)});
 // sayfalar
 const PG=['home','siniflar','nasil','restoranlar','topluluk','uyelik'];
-function route(){let h=location.hash.slice(1);if(!PG.includes(h))h='home';$$('[data-pg]').forEach(s=>s.classList.toggle('pgon',s.dataset.pg===h));$$('.links a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+h));const a=$('.links a.on');document.title=(h==='home'||!a?'':a.textContent+' · ')+'Mmm Yemek · Bütçene göre en iyisi';scrollTo(0,0);const L=$('.links');if(a&&L.scrollWidth>L.clientWidth+1)L.scrollTo({left:L.scrollLeft+a.getBoundingClientRect().left-L.getBoundingClientRect().left-(L.clientWidth-a.offsetWidth)/2})}
+function route(){let h=location.hash.slice(1);if(!PG.includes(h))h='home';$$('[data-pg]').forEach(s=>s.classList.toggle('pgon',s.dataset.pg===h));$$('.links a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+h));const a=$('.links a.on');document.title=(h==='home'||!a?'':a.textContent+' · ')+'Mmm Yemek · Bütçene göre en iyisi';scrollTo(0,0)}
 addEventListener('hashchange',route);route();
 </script>
 </body>
