@@ -191,8 +191,6 @@ main,footer{position:relative;z-index:1}
 @keyframes hop{0%,70%,100%{transform:translateY(0)}82%{transform:translateY(-4px)}92%{transform:translateY(0)}}
 /* hero: wavy underline + rotating sticker */
 .hero h1 span{position:relative}
-.hero h1 span:after{content:"";position:absolute;left:0;bottom:-18px;width:min(260px,62%);height:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='12' viewBox='0 0 24 12'%3E%3Cpath d='M0 6q6-8 12 0t12 0' fill='none' stroke='%23e0553a' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x 0 0/24px 12px;animation:wv 1.4s linear infinite}
-@keyframes wv{to{background-position-x:24px}}
 .badge{position:absolute;z-index:4;right:-14px;top:-24px;width:112px;height:112px;filter:drop-shadow(0 10px 18px rgba(15,18,53,.22))}
 .badge .ring{width:100%;height:100%;display:block;animation:spin 22s linear infinite}
 .badge .ctr{position:absolute;left:31%;top:31%;width:38%;height:38%;color:#2a2208}
@@ -204,8 +202,47 @@ main,footer{position:relative;z-index:1}
 }
 @keyframes rv{from{opacity:0;translate:0 26px}}
 @media(max-width:960px){.fi{--k:.78}.badge{width:92px;height:92px;right:-6px;top:-18px}}
-@media(max-width:640px){.fi{--k:.58;opacity:.09}.fi.hm{display:none}.badge{width:78px;height:78px;right:-4px;top:-14px}.hero h1 span:after{bottom:-14px;height:10px;background-size:20px 10px}.blob{width:80vmax;height:80vmax}}
-@media(prefers-reduced-motion:reduce){.fi,.fi svg,.blob,.badge .ring,.logo i,.spk,.steam path,.hero h1 span:after{animation:none!important}.spk{opacity:.5}}
+@media(max-width:640px){.fi{--k:.58;opacity:.09}.fi.hm{display:none}.badge{width:78px;height:78px;right:-4px;top:-14px}.blob{width:80vmax;height:80vmax}}
+@media(prefers-reduced-motion:reduce){.fi,.fi svg,.blob,.badge .ring,.logo i,.spk,.steam path{animation:none!important}.spk{opacity:.5}}
+
+/* ===== SSS ===== */
+.faq{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(32px,5vw,72px);align-items:start}
+.fq-side{position:sticky;top:calc(var(--nav) + 24px)}
+.fq-side .lead{margin-top:18px}
+.fq-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.fq-chip{padding:9px 15px;border-radius:99px;background:var(--surface);border:1.5px solid var(--line);font-weight:700;font-size:14px;color:var(--muted);transition:.2s}
+.fq-chip:hover{color:var(--ink);border-color:var(--ink)}
+.fq-chip.on{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
+.fq-list{display:grid;gap:12px}
+.fq-item{border:1.5px solid var(--line);border-radius:22px;background:var(--surface);overflow:hidden;transition:border-color .2s,box-shadow .3s}
+.fq-item:hover{border-color:color-mix(in srgb,var(--ink) 40%,var(--line))}
+.fq-item.open{border-color:var(--ink);box-shadow:0 18px 36px -24px rgba(23,33,31,.45)}
+.fq-item h3{font:inherit;letter-spacing:0;margin:0}
+.fq-q{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:18px 20px;font:800 18px/1.3 Manrope,'DM Sans',sans-serif;letter-spacing:-.03em;color:var(--ink)}
+.fq-q .no{flex:none;width:32px;height:32px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font:700 12px 'DM Sans',sans-serif;letter-spacing:0;color:var(--muted);transition:.25s}
+.fq-item.open .fq-q .no{background:var(--gold);color:#2a2208}
+.fq-q .qt{flex:1;min-width:0}
+.fq-q .pl{flex:none;position:relative;width:32px;height:32px;border-radius:50%;background:var(--soft);transition:background .25s,color .25s,transform .3s}
+.fq-q .pl:before,.fq-q .pl:after{content:"";position:absolute;left:50%;top:50%;width:12px;height:2px;margin:-1px 0 0 -6px;border-radius:2px;background:currentColor;transition:transform .3s}
+.fq-q .pl:after{transform:rotate(90deg)}
+.fq-item.open .pl{background:var(--accent);color:#fff;transform:rotate(180deg)}.fq-item.open .pl:after{transform:rotate(0)}
+.fq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s ease}
+.fq-item.open .fq-a{grid-template-rows:1fr}
+.fq-a>div{overflow:hidden;visibility:hidden;transition:visibility 0s .32s}
+.fq-item.open .fq-a>div{visibility:visible;transition-delay:0s}
+.ans{padding:0 22px 22px 66px;color:var(--muted)}
+.ans p+p{margin-top:10px}.ans b{color:var(--ink)}
+.fq-note{display:inline-flex;margin-top:16px;padding:10px 14px;border-radius:12px;background:color-mix(in srgb,var(--gold) 22%,transparent);color:var(--ink);font-weight:700;font-size:14.5px}
+.fq-lnk{color:var(--accent);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.fq-help{margin-top:8px;padding:28px;border-radius:24px;background:var(--ink);color:var(--on-ink)}
+.fq-help h3{font-size:24px;margin-bottom:8px}.fq-help p{opacity:.78;margin-bottom:20px;max-width:460px}
+.fq-help .btn.pri{background:var(--on-ink);color:var(--ink)}.fq-help .btn.pri:hover{background:var(--accent);color:#fff}
+.fq-help .btn.ghost{background:transparent;color:var(--on-ink);border-color:color-mix(in srgb,var(--on-ink) 35%,transparent)}
+.fq-help .btn.ghost:hover{border-color:var(--on-ink)}
+@media(min-width:961px) and (max-width:1120px){.links a{padding:8px 10px}.nav{gap:12px}.nav-r .btn{padding:12px 16px}}
+@media(max-width:960px){.faq{grid-template-columns:minmax(0,1fr);gap:24px}.fq-side,.fq-list{min-width:0}.fq-side{position:static}.fq-chips{flex-wrap:nowrap;overflow-x:auto;margin:22px calc(-1*var(--gut)) 0;padding:2px var(--gut);scrollbar-width:none}.fq-chips::-webkit-scrollbar{display:none}.fq-chip{flex:none;min-height:44px;padding:0 18px}}
+@media(max-width:640px){.fq-list{gap:10px}.fq-item{border-radius:18px}.fq-q{padding:16px;gap:12px;font-size:16px}.fq-q .no{width:28px;height:28px;font-size:11px}.fq-q .pl{width:28px;height:28px}.ans{padding:0 18px 20px;font-size:15px}.fq-help{padding:22px;border-radius:20px}.fq-help h3{font-size:21px}.fq-help .btn{width:100%}}
+@media(prefers-reduced-motion:reduce){.fq-a,.fq-q .pl,.fq-item{transition:none!important}}
 
 .burger,.scrim{display:none}
 /* =====================================================================
@@ -352,11 +389,47 @@ footer{font-size:13.5px}
 @media(max-width:360px){
 :root{--gut:max(14px,env(safe-area-inset-left),env(safe-area-inset-right))}
 .logo{font-size:20px}
-.facts{grid-template-columns:1fr}
-.facts div,.facts div+div,.facts div:nth-child(3){padding:16px 0;border-left:0}
-.facts div+div{border-top:1px solid var(--line)}
 .phone{padding:10px}
 .ns strong{font-size:14px}
+}
+/* ===== MOBILE POLISH: calmer spacing, text surfaces, no overlaps ===== */
+@media(max-width:640px){
+.sec{padding:52px 0}
+.head{gap:8px;margin-bottom:26px}
+.lead{line-height:1.62;text-wrap:pretty}
+.hero h1 span,h2{text-wrap:balance}
+/* hero: kicker on one line as a pill */
+.hero .kicker{display:flex;align-items:center;width:max-content;max-width:100%;white-space:nowrap;padding:8px 12px;margin-bottom:18px;border-radius:99px;background:color-mix(in srgb,var(--accent) 11%,var(--surface));border:1px solid color-mix(in srgb,var(--accent) 24%,transparent);font-size:clamp(9px,calc((100vw - 66px)/30),12.5px);letter-spacing:-.015em}
+.hero .kicker:before{display:none}
+.hero-grid{gap:30px}
+.hero .lead{margin-bottom:26px}
+.proof{margin-top:22px;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;font-size:13.5px}
+/* price chips: a tidy row under the photo instead of covering it */
+.hero-grid>div:last-child{display:flex;flex-direction:column}
+.photo{order:1}
+.stack{order:2;position:static;left:auto;top:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.stack .mini:nth-child(n){transform:none;min-width:0;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:3px;padding:11px 12px;border-radius:14px;font-size:12px;line-height:1.2;box-shadow:0 10px 20px -12px rgba(15,18,53,.5)}
+.stack .mini b{font-size:17px}
+.badge{right:-2px;top:-16px}
+/* facts as soft tiles */
+.facts{border-top:0;gap:10px;margin-top:30px}
+.facts>div:nth-child(n){padding:16px 14px;background:var(--surface);border:1px solid var(--line);border-radius:16px}
+/* why: each comparison is a card with labelled blocks */
+.vs{border:0;background:none;gap:12px;overflow:visible;border-radius:0}
+.vs-r{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--surface)}
+.vs-r h3{padding:16px 20px 14px;background:var(--soft);font-size:17px}
+.vs-r p{padding:16px 20px;font-size:15px}
+.vs-r p:first-of-type:before,.vs-r p:last-child:before{display:block;margin-bottom:8px;font:700 11px/1 'DM Sans',sans-serif;letter-spacing:.09em;text-transform:uppercase}
+.vs-r p:first-of-type:before{content:"Bugünkü uygulamalar";color:var(--muted)}
+.vs-r p:last-child:before{content:"Mmm Yemek";color:var(--accent)}
+/* cards get a little depth */
+.st,.num{box-shadow:0 16px 30px -24px rgba(23,33,31,.55)}
+.tks{gap:14px}
+.tl{gap:16px}
+.ben div{padding:18px 0}
+.tier{padding:18px 0}
+.vote,.titles,.pilot{margin-top:16px}
+footer .foot{gap:12px}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -403,7 +476,7 @@ footer{font-size:13.5px}
 <div class="bg-art" aria-hidden="true"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i><span class="fi " style="--x:3%;--y:9%;--s:140px;--r:-10deg;--py:-140px;--d:0.0s;--t:15s"><svg><use href="#a-noodle"/></svg></span><span class="fi " style="--x:28%;--y:3%;--s:120px;--r:12deg;--py:-90px;--d:-1.7s;--t:18s"><svg><use href="#a-pizza"/></svg></span><span class="fi " style="--x:64%;--y:2%;--s:130px;--r:-8deg;--py:-170px;--d:-3.4s;--t:21s"><svg><use href="#a-makarna"/></svg></span><span class="fi " style="--x:85%;--y:6%;--s:130px;--r:0deg;--py:-110px;--d:-5.1s;--t:24s"><svg><use href="#a-kebab"/></svg></span><span class="fi " style="--x:90%;--y:38%;--s:110px;--r:10deg;--py:-200px;--d:-6.8s;--t:15s"><svg><use href="#a-dumpling"/></svg></span><span class="fi " style="--x:-3%;--y:44%;--s:140px;--r:-8deg;--py:-120px;--d:-8.5s;--t:18s"><svg><use href="#a-takeout"/></svg></span><span class="fi hm" style="--x:52%;--y:50%;--s:100px;--r:-6deg;--py:-60px;--d:-10.2s;--t:21s"><svg><use href="#a-sushi"/></svg></span><span class="fi " style="--x:7%;--y:76%;--s:130px;--r:8deg;--py:-160px;--d:-11.9s;--t:24s"><svg><use href="#a-burger"/></svg></span><span class="fi hm" style="--x:24%;--y:88%;--s:110px;--r:-6deg;--py:-100px;--d:-13.6s;--t:15s"><svg><use href="#a-taco"/></svg></span><span class="fi " style="--x:46%;--y:84%;--s:130px;--r:6deg;--py:-220px;--d:-15.3s;--t:18s"><svg><use href="#a-noodle"/></svg></span><span class="fi " style="--x:80%;--y:68%;--s:140px;--r:-14deg;--py:-130px;--d:-17.0s;--t:21s"><svg><use href="#a-pizza"/></svg></span><span class="fi hm" style="--x:92%;--y:88%;--s:110px;--r:-30deg;--py:-80px;--d:-18.7s;--t:24s"><svg><use href="#a-kebab"/></svg></span><span class="spk" style="--x:14%;--y:24%;--s:22px;--d:0s;color:var(--accent)"><svg><use href="#a-spark"/></svg></span><span class="spk" style="--x:74%;--y:22%;--s:18px;--d:1.3s;color:var(--blue)"><svg><use href="#a-spark"/></svg></span><span class="spk" style="--x:40%;--y:34%;--s:16px;--d:2.1s;color:var(--accent)"><svg><use href="#a-spark"/></svg></span><span class="spk" style="--x:96%;--y:60%;--s:24px;--d:0.7s;color:var(--accent)"><svg><use href="#a-spark"/></svg></span><span class="spk" style="--x:34%;--y:66%;--s:20px;--d:2.8s;color:var(--blue)"><svg><use href="#a-spark"/></svg></span><span class="spk" style="--x:70%;--y:90%;--s:18px;--d:1.9s;color:var(--accent)"><svg><use href="#a-spark"/></svg></span><span class="spk" style="--x:12%;--y:60%;--s:16px;--d:3.3s;color:var(--blue)"><svg><use href="#a-spark"/></svg></span></div>
 <header><div class="wrap nav">
 <a class="logo" href="#home" aria-label="Mmm Yemek ana sayfa">Mmm<i>..</i>yemek</a>
-<nav class="links" id="menu" aria-label="Ana menü"><a href="#home">Ana sayfa</a><a href="#siniflar">Yemek biletleri</a><a href="#nasil">Nasıl çalışır</a><a href="#restoranlar">Restoranlar</a><a href="#topluluk">Topluluk</a><a href="#uyelik">Üyelik</a></nav>
+<nav class="links" id="menu" aria-label="Ana menü"><a href="#home">Ana sayfa</a><a href="#siniflar">Yemek biletleri</a><a href="#nasil">Nasıl çalışır</a><a href="#restoranlar">Restoranlar</a><a href="#topluluk">Topluluk</a><a href="#uyelik">Üyelik</a><a href="#sss">SSS</a></nav>
 <div class="nav-r"><button class="theme" id="theme" aria-label="Koyu temaya geç">☼</button><a class="btn pri" href="#siniflar">Yemek biletleri</a><button class="burger" id="burger" aria-label="Menüyü aç" aria-expanded="false" aria-controls="menu"><i></i><i></i><i></i></button></div>
 </div></header>
 <div class="scrim" id="scrim" aria-hidden="true"></div>
@@ -472,6 +545,10 @@ footer{font-size:13.5px}
 <tr><td>Kurye</td><td>49 ₺</td><td>Ücretsiz</td></tr>
 <tr><td>Verebileceğin yıldızlar</td><td>Silver, Diamond</td><td>Gold, Galactic, Silver, Diamond</td></tr></tbody></table>
 </div></section>
+<section class="sec" id="sss" data-pg="sss"><div class="wrap"><div class="faq">
+<div class="fq-side"><p class="kicker">Sık sorulan sorular</p><h2>Aklındaki sorulara<br>net cevaplar.</h2><p class="lead">Fiyatlardan teslimata, üyelikten restoranlara. En çok sorulanlara kısa ve net cevaplar.</p><div class="fq-chips" id="fqC" role="tablist" aria-label="Soru kategorileri"></div></div>
+<div class="fq-list" id="fqL"></div>
+</div></div></section>
 </main>
 <footer><div class="wrap foot"><a class="logo" href="#home">Mmm<i>..</i>yemek</a><span>Bütçene göre en iyisi · mmmyemek.com</span><span>Yakında: Mmm Food · Mmm Shopping</span><span>© 2026 Mmm Yemek</span></div></footer>
 
@@ -526,8 +603,41 @@ bg.onclick=()=>menu(!mn.classList.contains('open'));sc.onclick=()=>menu(false);
 mn.addEventListener('click',e=>{if(e.target.closest('a'))menu(false)});
 addEventListener('keydown',e=>{if(e.key==='Escape')menu(false)});
 matchMedia('(min-width:961px)').addEventListener('change',e=>{if(e.matches)menu(false)});
+// SSS
+const FC=['Tümü','Genel','Fiyat & bilet','Teslimat','Üyelik','Topluluk','Restoranlar'];
+const FQ=[
+['Genel','Mmm Yemek tam olarak nedir?','<p><b>Türkiye’nin ilk hiper-odaklı yemek sipariş platformu.</b> Yüzlerce ürün arasında kaybolmak yerine bütçene uygun sınıfı seçersin, o sınıftaki üç net seçenekten yemeğini alırsın.</p><p>Karar hızlı, fiyat baştan belli.</p>'],
+['Genel','Neden her sınıfta sadece üç seçenek var?','<p><b>Çünkü çok seçenek, iyi seçim demek değil.</b> Her sınıfta üç yemek var: biri cheat, biri dengeli, biri vegan. Hepsi o fiyata gelen en iyi ürün olarak vitrine çıkıyor.</p><p>Sıralamayı reklam değil memnuniyet belirliyor.</p>'],
+['Genel','Günün yemekleri gün içinde de değişir mi?','<p><b>Evet, vitrin sabit durmuyor.</b> Restoranların ürün stoklarına ve müşteri memnuniyetine göre gün içinde rotasyonlar oluyor.</p><p>Bir ürünün stoğu biterse yerine sıradaki ürün geliyor. Memnuniyeti düşen ürün vitrinden çekiliyor, sevilen ürün ise vitrinde daha uzun kalıyor. Yarın için bugünden seçim yapmak istersen Ön ödemeli akış var.</p>'],
+['Genel','Neden restoranlar aynı anda tek ürün satıyor?','<p><b>Tek ürüne odaklanan mutfak, aynı tarifi her gün biraz daha iyi yapar.</b> Restoran talebi önceden bildiği için malzemeyi tam ihtiyacı kadar alır, fire azalır.</p><p>Bu da fiyatı uzun süre sabit tutmayı kolaylaştırır.</p>'],
+['Genel','Hangi bölgelerde hizmet veriyorsunuz?','<p><b>İlk durağımız Kadıköy.</b> Pilotu 50 restoran ve 5.000 kullanıcı hedefiyle başlatıyoruz. Pilottan çıkan sonuçlara göre yeni mahalleleri açacağız.</p>'],
+['Fiyat & bilet','Fiyatlar değişecek mi?','<p><b>Misyonumuz, fiyatları kaliteyle paralel şekilde mümkün olan en uzun süre korumak.</b> Economy 350 ₺, Premium 550 ₺ ve First Class 950 ₺ fiyatlarını bu yüzden kolay kolay oynatmıyoruz.</p><p>Yine de adil bir konumda zam gerekliliği doğarsa fiyatlar yükselebilir. O durumda bile müşterilerimize karşı makul fiyat politikamızı her zaman koruyacağız.</p><span class="fq-note">Söz: kalite düşmeden, makul fiyat. Her zaman.</span>'],
+['Fiyat & bilet','Economy, Premium ve First Class arasındaki fark ne?','<p><b>Üçü de sabit fiyatlı yemek bileti.</b> Economy sıcak, doyurucu ve dengeli. Premium özenli tarif ve nitelikli malzeme sunar. First Class ise şefin imzasını ve en üst kaliteyi getirir.</p><p>İlk aşamada Economy ile başlıyoruz, Premium ve First Class sonra açılıyor.</p>'],
+['Fiyat & bilet','Sitedeki yemekler ve besin değerleri gerçek mi?','<p><b>Bu sayfadakiler örnek.</b> Yemekler, markalar, şef adları ve besin değerleri tasarımı göstermek için örnek olarak yer alıyor.</p><p>Uygulamada her yemeğin kalori, protein ve karbonhidrat değerini siparişten önce görürsün.</p>'],
+['Fiyat & bilet','Ön ödemeli bilet nedir, indirim var mı?','<p><b>Yarının yemeğini bugünden seçip toplu bilet alırsın.</b> Bilet adedine göre değişen bir indirim uygulanır.</p><p>Restoran ertesi günün talebini önceden bilir, malzemeyi tam ihtiyaç kadar alır. Ön ödemeli bilet yalnızca Priority üyelere özel.</p>'],
+['Teslimat','Hangi teslimat seçenekleri var?','<p><b>Üç akış var:</b></p><p><b>Acil · 30 dk:</b> yalnızca Priority, yakın çevrede (1 km).<br><b>Hemen · aynı gün:</b> Free ve Priority, 4 km’ye kadar.<br><b>Ön ödemeli · yarın:</b> yalnızca Priority, bir gün önceden seçim.</p>'],
+['Teslimat','Kurye ücreti var mı?','<p><b>Free hesapta 49 ₺, Priority’de ücretsiz.</b> İstersen gel-al seçeneğiyle yemeğini restorandan da alabilirsin.</p>'],
+['Teslimat','30 dakikalık Acil teslimat nasıl işliyor?','<p><b>Restoran 30 dakikalık sözü onay ekranında kabul eder.</b> Yemek sözdeki sürede kapına gelirse Gold Star verirsin, sistem de restorana Galactic Star ekler.</p><p>Acil teslimat yalnızca Priority üyelere özel, indirimsiz bilet fiyatıyla ve yakın çevrede (1 km) geçerli.</p>'],
+['Üyelik','Free ve Priority arasındaki fark ne?','<p><b>Free ile dene, Priority ile tam kullan.</b></p><p><b>Free (ücretsiz):</b> ayda 3 bilet, indirimsiz, kurye 49 ₺.<br><b>Priority (249 ₺ / ay):</b> sınırsız bilet, ön ödemeli toplu alımda indirim, Acil teslimat, ücretsiz kurye, Gold ve Galactic yıldız verme.</p>'],
+['Üyelik','Üyelik ücretine yemek dahil mi?','<p><b>Hayır.</b> Üyelik ücreti sistemi kullanma ücretidir, yemek içermez. Priority ile bilet alma sınırın kalkar ve avantajlara ulaşırsın. Biletleri yine sabit fiyatlarından alırsın.</p>'],
+['Üyelik','Üniversite ve kurumlar için indirim var mı?','<p><b>Evet.</b> Anlaşmalı üniversite ve kurumlar için Priority üyelikte özel indirim uyguluyoruz.</p>'],
+['Topluluk','Neden yorum yok, yıldız var?','<p><b>Yorum kalabalığı yerine net ve ölçülebilir memnuniyet.</b> Öneriler thumbs up ve down ile oylanır.</p><p><b>Silver:</b> yorum yazılmayan siparişlerde otomatik verilir.<br><b>Gold:</b> Priority üyelerden gelir, restoranın tier’ını belirler.<br><b>Galactic:</b> sorunsuz 30 dk’lık Acil teslimattan sonra sistem verir.<br><b>Diamond:</b> herkesin tek hakkı olan en değerli güven oyu.</p>'],
+['Topluluk','Mmm Gurme nasıl olunur?','<p><b>Mahallede en çok Diamond alan üye Mmm Gurme seçilir.</b> Müşteri ayda bir işletmeye, işletme de bir müşteriye Diamond verebilir.</p><p>Her ay M Şef ve M Gurme Temsilci seçilir. Üç ay üst üste lider olan, %50 avantaj sunan 1 yıllık Chefs & Partners Club’a girer.</p>'],
+['Restoranlar','Restoran olarak nasıl katılırım?','<p><b>Kadıköy’de ilk 50 restoranla başlıyoruz.</b> Restoran kayıtları çok yakında açılıyor. Ürün maliyetini birlikte hesaplıyor, sana özel kazanç tablosunu çıkarıyoruz.</p><p>Restoranlar sayfasındaki <a class="fq-lnk" href="#restoranlar">Haberdar ol</a> butonuyla listeye girebilirsin.</p>'],
+['Restoranlar','Restoranlara ne kazandırıyor?','<p><b>Yarını görürsün, firesiz üretirsin.</b> Talebi bir gün önceden bilirsin, ödemeyi erken alırsın, malzemeyi tam ihtiyacın kadar alırsın.</p><p>Komisyon tier’ına göre kademeli düşer. Memnuniyet arttıkça günlük stok limiti de 25’ten 500’e kadar büyür.</p>'],
+['Restoranlar','Beğenilmeyen ürünler vitrinde kalır mı?','<p><b>Kalmaz.</b> Bir ürün art arda iyileştirme önerisi alıyorsa vitrinden iner. Restoran ürünü iyileştirdiğini bildirmeden ya da yeni bir ürün seçmeden aynı ürünle geri dönemez.</p><p>Vitrin her zaman memnuniyetle şekillenir.</p>']
+];
+let fcat='Tümü';
+const FHELP='<div class="fq-help"><h3>Cevabını bulamadın mı?</h3><p>Biletleri keşfet, akışı gör ya da restoran olarak aramıza katıl.</p><div class="acts"><a class="btn pri" href="#siniflar">Yemek biletlerini keşfet</a><a class="btn ghost" href="#restoranlar">Restoranlar için</a></div></div>';
+function faq(){
+$('#fqC').innerHTML=FC.map(c=>`<button class="fq-chip${c===fcat?' on':''}" role="tab" aria-selected="${c===fcat}" data-c="${c}">${c}</button>`).join('');
+const L=FQ.map((f,i)=>({f,i})).filter(x=>fcat==='Tümü'||x.f[0]===fcat);
+$('#fqL').innerHTML=L.map(({f,i},n)=>`<div class="fq-item${n===0?' open':''}"><h3><button class="fq-q" id="fqb${i}" aria-expanded="${n===0}" aria-controls="fa${i}"><span class="no">${String(n+1).padStart(2,'0')}</span><span class="qt">${f[1]}</span><span class="pl" aria-hidden="true"></span></button></h3><div class="fq-a" id="fa${i}" role="region" aria-labelledby="fqb${i}"><div><div class="ans">${f[2]}</div></div></div></div>`).join('')+FHELP}
+$('#fqC').onclick=e=>{const b=e.target.closest('.fq-chip');if(!b)return;fcat=b.dataset.c;faq()};
+$('#fqL').onclick=e=>{const b=e.target.closest('.fq-q');if(!b)return;const it=b.closest('.fq-item'),o=!it.classList.contains('open');it.classList.toggle('open',o);b.setAttribute('aria-expanded',o)};
+faq();
 // sayfalar
-const PG=['home','siniflar','nasil','restoranlar','topluluk','uyelik'];
+const PG=['home','siniflar','nasil','restoranlar','topluluk','uyelik','sss'];
 function route(){let h=location.hash.slice(1);if(!PG.includes(h))h='home';$$('[data-pg]').forEach(s=>s.classList.toggle('pgon',s.dataset.pg===h));$$('.links a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+h));const a=$('.links a.on');document.title=(h==='home'||!a?'':a.textContent+' · ')+'Mmm Yemek · Bütçene göre en iyisi';scrollTo(0,0)}
 addEventListener('hashchange',route);route();
 </script>
