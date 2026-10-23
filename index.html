@@ -158,6 +158,148 @@ footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted);font-s
 @media(max-width:960px){.hero-grid,.cls,.rest,.com,.head{grid-template-columns:1fr}.head{gap:16px;margin-bottom:32px}.stack{left:12px}.facts{grid-template-columns:1fr 1fr}.facts div:nth-child(3){padding-left:0;border-left:0}.facts div:nth-child(n+3){border-top:1px solid var(--line)}.cphoto{position:static;aspect-ratio:16/10}.rphoto{min-height:340px}.nums{grid-template-columns:1fr}.tl{grid-template-columns:1fr 1fr}.ex{grid-template-columns:1fr}.ex-tabs{display:flex;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line)}.ex-tab{white-space:nowrap;border-left:0;border-bottom:4px solid transparent;padding:16px 18px}.ex-tab small{display:none}.ex-tab.on{border-bottom-color:var(--accent);margin:0}.ex-panel{grid-template-columns:1fr;min-height:0}.ex-art{aspect-ratio:16/8}.ex-art svg{width:auto;height:84%}}
 @media(max-width:960px){header{height:auto;padding:10px 0 0}.nav{flex-wrap:wrap;row-gap:8px}.links{display:flex;order:3;width:100%;overflow-x:auto;padding-bottom:10px}.links a{white-space:nowrap}}
 @media(max-width:640px){.wrap{width:calc(100% - 32px)}.nav-r .btn{display:none}.phone{height:auto;min-height:640px}.photo{aspect-ratio:4/4.4;border-radius:24px}.mini{min-width:170px}.ben{grid-template-columns:1fr}.tl{grid-template-columns:1fr}.il{aspect-ratio:16/9}.il svg{width:auto;height:80%}.vs-h{display:none}.vs-r{grid-template-columns:1fr}.vs-r>*{padding:18px 20px}.vs-r h3{padding-bottom:0}.vs-r p:first-of-type:before{content:"Bugün: ";font-weight:700;color:var(--ink)}.vs-r p:last-child:before{content:"Mmm’de: ";font-weight:700}.tier{grid-template-columns:44px 1fr}.tier p{grid-column:2}.tbl{display:block;overflow-x:auto}.tbl th,.tbl td{padding:16px;min-width:150px}.tk{grid-template-columns:1fr 112px;--sx:calc(100% - 112px)}.tk>div{padding:18px}.tk .price{font-size:24px}.tabs{display:flex}.tab{flex:1;padding:12px 6px;font-size:14px}.pilot,.titles{padding:24px}}
+
+/* =====================================================================
+   MOBILE ADAPTIVE LAYER
+   Everything below lives inside max-width media queries only, so the
+   desktop / web layout (961px and up) is completely untouched.
+   ===================================================================== */
+@media(max-width:960px){
+:root{--nav:112px;--gut:max(20px,env(safe-area-inset-left),env(safe-area-inset-right))}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{overflow-x:clip}
+a,button,label,.tk{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.wrap{width:min(1160px,calc(100% - 2*var(--gut)))}
+.sec{padding:clamp(44px,8vw,64px) 0}
+#siniflar{padding-top:28px}
+.kicker{align-items:flex-start;line-height:1.4}.kicker:before{flex:none;margin-top:.7em}
+/* header: compact two-row bar, swipeable menu, notch safe */
+header{padding-top:calc(8px + env(safe-area-inset-top))}
+.nav{row-gap:4px}
+.links{width:calc(100% + 2*var(--gut));max-width:none;margin-inline:calc(-1*var(--gut));padding:0 var(--gut) 8px;gap:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.links::-webkit-scrollbar{display:none}
+.links a{flex:none;padding:11px 14px;font-size:15px}
+/* touch: no sticky hover shifts, bigger hit areas */
+.tk:hover{transform:none}
+.dots button{position:relative}.dots button:before{content:"";position:absolute;inset:-14px -3px}
+.x{width:36px;height:36px}
+.vb{min-height:44px}
+.ex-tabs{scrollbar-width:none;-webkit-overflow-scrolling:touch}.ex-tabs::-webkit-scrollbar{display:none}
+.ex-tab{flex:none}
+/* phone mock: grow with content (large system fonts) */
+.phone{height:auto;min-height:660px}
+.mt span{font-size:13px}
+footer{padding:32px 0 calc(32px + env(safe-area-inset-bottom))}
+footer .foot{flex-direction:column;align-items:flex-start;gap:10px}
+}
+@media(max-width:960px) and (max-height:500px){header{position:static}}
+
+@media(max-width:640px){
+:root{--gut:max(16px,env(safe-area-inset-left),env(safe-area-inset-right))}
+body{font-size:15.5px;line-height:1.6}
+h1{font-size:clamp(36px,11.5vw,48px);line-height:1.04}
+h2{font-size:clamp(28px,8vw,36px)}
+.lead{font-size:16px}
+.kicker{font-size:13px;margin-bottom:12px}
+.head{gap:12px;margin-bottom:26px}
+.btn{min-height:48px;padding:13px 20px}
+.logo{font-size:22px}
+/* hero */
+.hero{padding-top:20px}
+.hero h1{margin-bottom:18px}.hero .lead{margin-bottom:24px}
+.acts .btn{flex:1 1 100%}
+.proof{margin-top:24px;align-items:flex-start;line-height:1.45}.proof:before{margin-top:.35em}
+.photo{border-radius:22px;aspect-ratio:4/4.2}
+.stack{left:10px;top:14px;gap:6px}
+.mini{min-width:0;gap:12px;padding:8px 12px;border-radius:12px;font-size:13px}
+.mini b{font-size:16px}
+.cap{left:16px;right:16px;bottom:16px;gap:12px}
+.cap strong{font-size:19px}
+.dots{gap:5px;flex:none}.dots button{width:18px}.dots button.on{width:32px}
+.facts{margin-top:32px}
+.facts div{padding:18px 12px 18px 0}.facts div+div{padding-left:14px}
+.facts b{font-size:17px;line-height:1.25}.facts span{font-size:13px;line-height:1.4;display:block;margin-top:2px}
+/* why */
+.vs{border-radius:20px}
+/* explore */
+.ex{border-radius:20px}
+.ex-panel{padding:22px 20px;gap:20px}
+.ex-panel h3{font-size:24px}
+.ex-panel ul{margin:16px 0 22px}
+.ex-panel .btn{width:100%}
+.ex-art{aspect-ratio:16/8;border-radius:18px}
+/* tickets + phone */
+.tks{gap:12px}
+.tk h3{font-size:22px}
+.phone{max-width:min(100%,420px);border-radius:32px;min-height:0}
+.phone h3{font-size:22px}
+.cl .hd .lead{font-size:15.5px}
+.info{padding:13px 14px;font-size:14px}
+.order{padding:16px;font-size:15.5px}
+.ns{gap:6px}.ns div{padding:8px 7px}.ns strong{font-size:15px}.ns i{font-size:11px;overflow-wrap:anywhere}
+/* how it works */
+.tabs{width:100%;margin-bottom:22px}
+.tab{text-align:center;line-height:1.25;min-height:48px;display:grid;place-items:center}
+.meta{margin-bottom:24px}
+.tl{gap:14px}
+.st{border-radius:18px}
+.sx{padding:16px 18px 18px}
+.note{margin-top:24px;padding:14px 16px;font-size:14.5px}
+/* restaurants */
+.rphoto{min-height:260px;border-radius:24px}
+.rphoto span{left:14px;bottom:14px;font-size:13px;padding:9px 14px}
+.ben{margin:20px 0}
+.ben div{padding:16px 0}
+.num{padding:22px;border-radius:20px}
+.pilot{padding:22px;border-radius:20px;gap:18px}
+.pilot h3{font-size:22px}
+.pilot .btn{width:100%}
+/* community */
+.cphoto{border-radius:24px;aspect-ratio:4/3}
+.tiers{margin:24px 0}
+.tier{gap:6px 14px;padding:16px 0}
+.vote{padding:20px;border-radius:20px}
+.vote h3{font-size:21px}
+.vrow{gap:8px;margin:16px 0}
+.vb{flex:1 1 calc(50% - 8px);padding:10px 12px}
+.rank{padding:14px 16px}.rank strong{font-size:24px}
+.titles{padding:22px;border-radius:20px}.titles h3{font-size:23px}
+/* membership: table becomes stacked cards (no sideways scrolling) */
+.tbl,.tbl tbody,.tbl tr,.tbl td{display:block}
+.tbl{overflow:visible;border:0;background:none;border-radius:0}
+.tbl thead{display:none}
+.tbl tr{margin-bottom:14px;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--surface)}
+.tbl td{min-width:0;padding:14px 18px;font-size:15px}
+.tbl td:first-child{width:auto;background:var(--soft);color:var(--ink);font:800 17px/1.3 Manrope;letter-spacing:-.03em}
+.tbl tbody tr td,.tbl tbody tr:last-child td{border-bottom:1px solid var(--line)}
+.tbl tbody tr td:last-child{border-bottom:0}
+.tbl td:nth-child(2):before{content:"Free · ";font-weight:700;color:var(--ink)}
+.tbl td:last-child:before{content:"Priority · ";font-weight:700}
+footer{font-size:13.5px}
+}
+
+@media(max-width:480px){
+.tabs{flex-direction:column}
+.tab{width:100%}
+.tk{grid-template-columns:1fr 104px;--sx:calc(100% - 104px)}
+.tk>div{padding:16px 14px}.tk>div+div{padding:16px 8px}
+.tk h3{font-size:20px}.tk p{font-size:14px;margin-bottom:10px}.tk .price{font-size:22px}
+.meal{padding:36px 12px 40px}
+.by{right:10px;font-size:11px}
+.sheet{padding:12px}
+.vb{flex-basis:100%}
+}
+
+@media(max-width:360px){
+:root{--gut:max(14px,env(safe-area-inset-left),env(safe-area-inset-right))}
+.logo{font-size:20px}
+.links a{padding:11px 12px;font-size:14px}
+.facts{grid-template-columns:1fr}
+.facts div,.facts div+div,.facts div:nth-child(3){padding:16px 0;border-left:0}
+.facts div+div{border-top:1px solid var(--line)}
+.phone{padding:10px}
+.ns strong{font-size:14px}
+}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -306,7 +448,7 @@ $$('.vb').forEach(b=>b.onclick=()=>{const k=b.dataset.v;if(vs===k){vc[k]--;vs=nu
 $('#pilot').onclick=e=>{e.target.textContent='Not aldık ✓'};
 // sayfalar
 const PG=['home','siniflar','nasil','restoranlar','topluluk','uyelik'];
-function route(){let h=location.hash.slice(1);if(!PG.includes(h))h='home';$$('[data-pg]').forEach(s=>s.classList.toggle('pgon',s.dataset.pg===h));$$('.links a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+h));const a=$('.links a.on');document.title=(h==='home'||!a?'':a.textContent+' · ')+'Mmm Yemek · Bütçene göre en iyisi';scrollTo(0,0)}
+function route(){let h=location.hash.slice(1);if(!PG.includes(h))h='home';$$('[data-pg]').forEach(s=>s.classList.toggle('pgon',s.dataset.pg===h));$$('.links a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+h));const a=$('.links a.on');document.title=(h==='home'||!a?'':a.textContent+' · ')+'Mmm Yemek · Bütçene göre en iyisi';scrollTo(0,0);const L=$('.links');if(a&&L.scrollWidth>L.clientWidth+1)L.scrollTo({left:L.scrollLeft+a.getBoundingClientRect().left-L.getBoundingClientRect().left-(L.clientWidth-a.offsetWidth)/2})}
 addEventListener('hashchange',route);route();
 </script>
 </body>
